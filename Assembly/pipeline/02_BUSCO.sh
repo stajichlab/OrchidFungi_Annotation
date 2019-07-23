@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --nodes 1 --ntasks 4 --mem 16G --time 36:00:00 --out logs/busco.%a.log -J busco
+#SBATCH --nodes 1 --ntasks 4 --mem 16G --time 60:00:00 --out logs/busco.%a.log -J busco
 
 module load busco
 
@@ -42,7 +42,7 @@ if [ -d "$OUTFOLDER/run_${NAME}" ];  then
     exit
 else
     pushd $OUTFOLDER
-    run_BUSCO.py -i $GENOMEFILE -l $LINEAGE -o $NAME -m geno --cpu $CPU --tmp $TEMP --long -sp $SEED_SPECIES
+    run_BUSCO.py -i $GENOMEFILE -l $LINEAGE -o $NAME -m geno --cpu $CPU --tmp $TEMP --sp $SEED_SPECIES --long
     popd
 fi
 

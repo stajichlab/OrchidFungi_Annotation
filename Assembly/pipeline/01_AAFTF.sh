@@ -72,8 +72,9 @@ if [ ! -f $PURGE ]; then
     AAFTF sourpurge -i $VECCLEAN -o $PURGE -c $CPU --phylum $PHYLUM
 fi
 
+# this is going to take too long with highly fragmented assemblies
 if [ ! -f $CLEANDUP ]; then
-   AAFTF rmdup -i $PURGE -o $CLEANDUP -c $CPU -m 1000
+   AAFTF rmdup -i $PURGE -o $CLEANDUP -c $CPU -m 1500
 fi
 
 #if [ ! -f $PILON ]; then
@@ -88,6 +89,7 @@ fi
 if [ ! -f $SORTED ]; then
 #    AAFTF sort -i $PILON -o $SORTED
     AAFTF sort -i $CLEANDUP -o $SORTED
+#    AAFTF sort -i $PURGE -o $SORTED
 fi
 
 if [ ! -f $STATS ]; then
