@@ -28,7 +28,7 @@ if [ ! $N ]; then
     fi
 fi
 IFS=,
-sed -n ${N}p $SAMPLEFILE | while read BASE SPECIES
+tail -n +2 $SAMPLEFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET
 do
     IN=$(realpath $INDIR/$BASE.sorted.fasta)
     OUT=$(realpath $OUTDIR/$BASE.masked.fasta)
@@ -43,7 +43,7 @@ do
     module load funannotate/git-live
     module unload rmblastn
     module load ncbi-rmblast/2.6.0
-    export AUGUSTUS_CONFIG_PATH=/bigdata/stajichlab/shared/pkg/augustus/3.3/config
+    export AUGUSTUS_CONFIG_PATH=$(realpath lib/augustus/3.3/config)
 
     mkdir $BASE.mask.$SLURM_JOB_ID
     pushd $BASE.mask.$SLURM_JOB_ID
