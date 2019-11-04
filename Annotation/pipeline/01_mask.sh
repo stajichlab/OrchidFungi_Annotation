@@ -28,7 +28,7 @@ if [ ! $N ]; then
     fi
 fi
 IFS=,
-tail -n +2 $SAMPLEFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET
+tail -n +2 $SAMPLEFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET LOCUS
 do
     IN=$(realpath $INDIR/$BASE.sorted.fasta)
     OUT=$(realpath $OUTDIR/$BASE.masked.fasta)

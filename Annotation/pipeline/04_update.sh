@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -p batch --time 2-0:00:00 --ntasks 16 --nodes 1 --mem 24G --out logsupdate/.%a.log
+#SBATCH -p batch --time 2-0:00:00 --ntasks 16 --nodes 1 --mem 24G --out logs/update.%a.log
 module unload python
 module unload perl
 module unload miniconda2
@@ -8,7 +8,7 @@ module load funannotate/git-live
 PASAHOMEPATH=$(dirname `which Launch_PASA_pipeline.pl`)
 TRINITYHOMEPATH=$(dirname `which Trinity`)
 export AUGUSTUS_CONFIG_PATH=$(realpath lib/augustus/3.3/config)
-CPUS=$SLURM_CPUS_ON_NODE
+CPU=$SLURM_CPUS_ON_NODE
 if [ -z $CPU ]; then
 	CPU=1
 fi
@@ -43,7 +43,7 @@ if [ $N -gt $MAX ]; then
     exit
 fi
 IFS=,
-tail -n +2 $SAMPFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET
+tail -n +2 $SAMPFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET LOCUS
 do
-    funannotate update --cpus $CPU -i ../$OUTDIR/$BASE
+    funannotate update --cpus $CPU -i $OUTDIR/$BASE --out $OUTDIR/$BASE
 done

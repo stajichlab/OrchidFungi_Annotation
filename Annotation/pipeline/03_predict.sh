@@ -44,7 +44,7 @@ if [ $N -gt $MAX ]; then
     exit
 fi
 IFS=,
-tail -n +2 $SAMPFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET
+tail -n +2 $SAMPFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET LOCUS
 do
     MASKED=$(realpath $INDIR/$BASE.masked.fasta)
     if [ ! -f $MASKED ]; then
@@ -57,7 +57,7 @@ do
     mkdir $name.predict.$$
     pushd $name.predict.$$
     funannotate predict --cpus $CPU --keep_no_stops --SeqCenter JGI --busco_db $BUSCO --strain "$STRAIN" \
-	-i $MASKED --name $BASE --protein_evidence $FUNANNOTATE_DB/uniprot_sprot.fasta \
+	-i $MASKED --name $LOCUS --protein_evidence $FUNANNOTATE_DB/uniprot_sprot.fasta \
 	-s $species -o ../$OUTDIR/$BASE --busco_seed_species $SEED_SPECIES --genemark_mode ET
     popd
     rmdir $name.predict.$$

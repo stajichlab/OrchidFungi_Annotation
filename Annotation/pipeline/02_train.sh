@@ -2,8 +2,8 @@
 
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
-#SBATCH --mem 48gb -p intel
-#SBATCH --time=3-00:15:00   
+#SBATCH --mem 256gb -p intel
+#SBATCH --time=7-00:15:00   
 #SBATCH --output=logs/train.%a.log
 #SBATCH --job-name="TrainFun"
 module unload python
@@ -16,7 +16,7 @@ TRINITYHOMEPATH=$(dirname `which Trinity`)
 export AUGUSTUS_CONFIG_PATH=$(realpath lib/augustus/3.3/config)
 CPUS=$SLURM_CPUS_ON_NODE
 
-MEM=48G
+MEM=256G
 
 if [ ! $CPUS ]; then
  CPUS=2
@@ -36,7 +36,7 @@ if [ ! $N ]; then
     fi
 fi
 IFS=,
-tail -n +2 $SAMPLEFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET
+tail -n +2 $SAMPLEFILE | sed -n ${N}p | while read BASE SPECIES STRAIN RNASEQSET LOCUS
 do
     MASKED=$(realpath $INDIR/$BASE.masked.fasta)
     if [ ! -f $MASKED ]; then

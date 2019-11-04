@@ -33,7 +33,7 @@ if [ ! -f $GENERICLIB ]; then
 	exit
 fi
 IFS=,
-sed -n ${N}p $SAMPLEFILE | while read BASE SPECIES
+sed -n ${N}p $SAMPLEFILE | while read BASE SPECIES STRAIN RNASEQSET LOCUS
 do
     IN=$(realpath $INDIR/$BASE.sorted.fasta)
     OUT=$(realpath $OUTDIR/$BASE.masked.fasta)
